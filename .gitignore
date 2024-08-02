@@ -1,0 +1,6 @@
+# Ignore JetBrains IDE files
+.idea/
+
+# npm
+node_modules/
+package-lock.json
