@@ -1,0 +1,9 @@
+---
+name: RTD
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - doxygen=1.10.0
+  - graphviz=11.0.0
+  - nodejs
