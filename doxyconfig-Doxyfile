@@ -45,7 +45,11 @@ HTML_EXTRA_FILES += ../third-party/doxyconfig/doxygen-awesome-css/doxygen-awesom
 HTML_EXTRA_FILES += ../third-party/doxyconfig/doxygen-awesome-css/doxygen-awesome-interactive-toc.js
 HTML_EXTRA_FILES += ../third-party/doxyconfig/doxygen-awesome-css/doxygen-awesome-tabs.js
 HTML_EXTRA_STYLESHEET = ../third-party/doxyconfig/doxygen-awesome-css/doxygen-awesome.css
-HTML_HEADER = header-doxyconfig.html
+HTML_HEADER = doxyconfig-header.html
+
+# readthedocs custom search
+HTML_EXTRA_FILES += doxyconfig-readthedocs-search.js
+HTML_EXTRA_STYLESHEET += doxyconfig.css
 
 # custom aliases
 ALIASES = ""
@@ -89,6 +93,12 @@ PREDEFINED += __linux
 PREDEFINED += __linux__
 PREDEFINED += __MACH__
 PREDEFINED += _WIN32
+
+# search settings
+SEARCHENGINE = YES
+SERVER_BASED_SEARCH = YES
+EXTERNAL_SEARCH = YES
+SEARCHENGINE_URL = https://docs.lizardbyte.dev/
 
 # general settings
 CASE_SENSE_NAMES = YES

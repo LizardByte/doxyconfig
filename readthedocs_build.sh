@@ -47,15 +47,17 @@ function install_node_modules {
 
 function merge_doxyconfigs {
   echo "Merging doxygen configs"
-  cp "${DOXYCONFIG_DIR}/Doxyfile" "./docs/Doxyfile-doxyconfig"
-  cp "${DOXYCONFIG_DIR}/header.html" "./docs/header-doxyconfig.html"
-  cat "./docs/Doxyfile" >> "./docs/Doxyfile-doxyconfig"
+  cp "${DOXYCONFIG_DIR}/doxyconfig-Doxyfile" "./docs/"
+  cp "${DOXYCONFIG_DIR}/doxyconfig-header.html" "./docs/"
+  cp "${DOXYCONFIG_DIR}/doxyconfig.css" "./docs/"
+  cp "${DOXYCONFIG_DIR}/doxyconfig-readthedocs-search.js" "./docs/"
+  cat "./docs/Doxyfile" >> "./docs/doxyconfig-Doxyfile"
 }
 
 function build_docs {
   echo "Building docs"
   pushd docs
-  doxygen Doxyfile-doxyconfig
+  doxygen doxyconfig-Doxyfile
   popd
 }
 
