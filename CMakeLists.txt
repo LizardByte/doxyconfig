@@ -1,3 +1,8 @@
+cmake_minimum_required(VERSION 3.18)
+project(doxyconfig VERSION 0.0.0
+        DESCRIPTION "Doxygen configuration for LizardByte projects"
+        HOMEPAGE_URL "https://app.lizardbyte.dev")
+
 # find doxygen and graphviz
 find_package(Doxygen 1.10 REQUIRED dot)  # debian and ubuntu left in the dust
 
@@ -23,12 +28,21 @@ message(STATUS "DOXYGEN_BUILD_DIR_CMAKE: ${DOXYGEN_BUILD_DIR_CMAKE}")
 file(MAKE_DIRECTORY "${DOXYGEN_BUILD_DIR_CMAKE}/html")
 
 # copy files to build directory
-file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/header.html" "${SOURCE_DOCS_DIR}/header-doxyconfig.html")
-file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile" "${SOURCE_DOCS_DIR}/Doxyfile-doxyconfig")
+file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-header.html" "${SOURCE_DOCS_DIR}/doxyconfig-header.html")
+file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-Doxyfile" "${SOURCE_DOCS_DIR}/doxyconfig-Doxyfile")
+file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig.css" "${SOURCE_DOCS_DIR}/doxyconfig.css")
+file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-readthedocs-search.js"
+        "${SOURCE_DOCS_DIR}/doxyconfig-readthedocs-search.js")
 
 # append the "${SOURCE_DOCS_DIR}/Doxyfile to the Doxyfile-doxyconfig
 file(READ "${SOURCE_DOCS_DIR}/Doxyfile" DOXYFILE_CONTENTS)
-file(APPEND "${SOURCE_DOCS_DIR}/Doxyfile-doxyconfig" "${DOXYFILE_CONTENTS}")
+file(APPEND "${SOURCE_DOCS_DIR}/doxyconfig-Doxyfile" "${DOXYFILE_CONTENTS}")
+
+# if this is the doxyconfig project, copy doxygen-awesome-css to third-party
+if(EXISTS "${CMAKE_SOURCE_DIR}/.doxyconfig")
+    file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxygen-awesome-css"
+            DESTINATION "${CMAKE_SOURCE_DIR}/third-party/doxyconfig")
+endif()
 
 # sunshine has its own icon and logo
 if(NOT ${CMAKE_PROJECT_NAME} STREQUAL "Sunshine")
@@ -86,7 +100,7 @@ add_custom_target(docs ALL
         COMMAND ${CMAKE_COMMAND} -E env
             READTHEDOCS_OUTPUT=${DOXYGEN_BUILD_DIR_RELATIVE}
             READTHEDOCS_VERSION=${DOXYGEN_PROJECT_VERSION}
-            ${DOXYGEN_EXECUTABLE} Doxyfile-doxyconfig
+            ${DOXYGEN_EXECUTABLE} doxyconfig-Doxyfile
         VERBATIM
         DEPENDS FONT_AWESOME_FILES
 )

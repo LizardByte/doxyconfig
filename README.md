@@ -24,7 +24,7 @@ This is a common Doxygen config for LizardByte projects.
 
    ```gitignore
    # doxyconfig
-   docs/*-doxyconfig*
+   docs/doxyconfig*
    ```
 
 5. Optionally, add the following to the input list in your Doxyfile.
