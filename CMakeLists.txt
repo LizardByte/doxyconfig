@@ -3,6 +3,17 @@ project(doxyconfig VERSION 0.0.0
         DESCRIPTION "Doxygen configuration for LizardByte projects"
         HOMEPAGE_URL "https://app.lizardbyte.dev")
 
+#
+# Options
+#
+
+# provide the NPM executable to use instead of searching for it
+set(NPM_EXECUTABLE "" CACHE FILEPATH "Path to the NPM executable")
+
+#
+# End Options
+#
+
 # find doxygen and graphviz
 find_package(Doxygen 1.10 REQUIRED dot)  # debian and ubuntu left in the dust
 
@@ -64,11 +75,15 @@ set(FONT_AWESOME_FILES_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@fortawesome/fontawesome-free/webfonts/"
 )
 
-find_program(NPM npm REQUIRED)
+if(NPM_EXECUTABLE STREQUAL "")
+    find_program(NPM npm REQUIRED)
+else()
+    set(NPM ${NPM_EXECUTABLE})
+endif()
 add_custom_target(_docs_fontawesome_install
         COMMENT "Installing node modules"
         BYPRODUCTS ${FONT_AWESOME_FILES_DEPENDS}
-        COMMAND ${NPM} install
+        COMMAND "${NPM}" install
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         VERBATIM
 )
