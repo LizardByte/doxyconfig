@@ -34,3 +34,8 @@ This is a common Doxygen config for LizardByte projects.
    ```
 
 6. Optionally, copy the `.readthedocs.yaml` file to the root of your project.
+
+<details style="display: none;">
+  <summary></summary>
+  [TOC]
+</details>
