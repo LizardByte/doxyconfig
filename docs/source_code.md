@@ -154,3 +154,8 @@ We have defined some custom aliases to simplify documenting examples.
 @expander{Expander Title | Expander Content}
 @endverbatim
   @expander{Expander Title | Expander Content}
+
+<details style="display: none;">
+  <summary></summary>
+  [TOC]
+</details>
