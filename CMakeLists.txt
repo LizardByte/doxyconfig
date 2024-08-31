@@ -28,11 +28,10 @@ message(STATUS "DOXYGEN_BUILD_DIR_CMAKE: ${DOXYGEN_BUILD_DIR_CMAKE}")
 file(MAKE_DIRECTORY "${DOXYGEN_BUILD_DIR_CMAKE}/html")
 
 # copy files to build directory
-file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-header.html" "${SOURCE_DOCS_DIR}/doxyconfig-header.html")
-file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-Doxyfile" "${SOURCE_DOCS_DIR}/doxyconfig-Doxyfile")
-file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig.css" "${SOURCE_DOCS_DIR}/doxyconfig.css")
-file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-readthedocs-search.js"
-        "${SOURCE_DOCS_DIR}/doxyconfig-readthedocs-search.js")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-header.html" DESTINATION "${SOURCE_DOCS_DIR}")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-Doxyfile" DESTINATION "${SOURCE_DOCS_DIR}")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig.css" DESTINATION "${SOURCE_DOCS_DIR}")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-readthedocs-search.js" DESTINATION "${SOURCE_DOCS_DIR}")
 
 # append the "${SOURCE_DOCS_DIR}/Doxyfile to the Doxyfile-doxyconfig
 file(READ "${SOURCE_DOCS_DIR}/Doxyfile" DOXYFILE_CONTENTS)
