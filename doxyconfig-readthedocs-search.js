@@ -66,7 +66,7 @@ class ReadtheDocsSearch {
 
       // readthedocs metadata
       let projectSlug = ReadtheDocsSearch.getMetaValue("readthedocs-project-slug") || "doxyconfig";
-      let projectVersion = ReadtheDocsSearch.getMetaValue("readthedocs-version") || "latest";
+      let projectVersion = ReadtheDocsSearch.getMetaValue("readthedocs-version-slug") || "latest";
 
       // pull requests are not indexed, so use the default version
       if (/^\d+$/.test(projectVersion)) {
