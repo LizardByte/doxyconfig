@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "@fortawesome/fontawesome-free": "7.1.0"
+    "@fortawesome/fontawesome-free": "7.1.0",
+    "@lizardbyte/shared-web": "2026.219.33142"
   },
   "devDependencies": {
     "jquery": "^3.7.1"
