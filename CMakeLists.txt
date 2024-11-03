@@ -92,6 +92,15 @@ add_custom_command(
 file(RELATIVE_PATH DOXYGEN_BUILD_DIR_RELATIVE "${SOURCE_DOCS_DIR}" "${DOXYGEN_BUILD_DIR_CMAKE}")
 message(STATUS "DOXYGEN_BUILD_DIR_RELATIVE: ${DOXYGEN_BUILD_DIR_RELATIVE}")
 
+if(CMAKE_HOST_WIN32)
+    # On Windows, we have to build the documentation using only a single thread to
+    # avoid the build mysteriously taking forever.
+    # See https://github.com/doxygen/doxygen/issues/9694
+    set(DOXYGEN_NUM_THREADS 1)
+else()
+    set(DOXYGEN_NUM_THREADS 0)
+endif()
+
 # build docs
 add_custom_target(docs ALL
         COMMENT "Building Doxygen documentation"
@@ -99,6 +108,7 @@ add_custom_target(docs ALL
         COMMAND ${CMAKE_COMMAND} -E env
             READTHEDOCS_OUTPUT=${DOXYGEN_BUILD_DIR_RELATIVE}
             READTHEDOCS_VERSION=${DOXYGEN_PROJECT_VERSION}
+            DOXYCONFIG_THREADS=${DOXYGEN_NUM_THREADS}
             ${DOXYGEN_EXECUTABLE} doxyconfig-Doxyfile
         VERBATIM
         DEPENDS FONT_AWESOME_FILES
