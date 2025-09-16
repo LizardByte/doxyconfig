@@ -129,6 +129,23 @@ We have defined some custom aliases to simplify documenting examples.
     @todo{Fix this.}
   * \@warning{Content}
     @warning{Reader discretion is strongly advised.}
+
+* Markers
+  * \@red{Content}<br>
+    @red{This is red.}
+  * \@blue{Content}<br>
+    @blue{This is blue.}
+  * \@green{Content}<br>
+    @green{This is green.}
+  * \@yellow{Content}<br>
+    @yellow{This is yellow.}
+
+* Expander
+  @verbatim
+  @expander{Expander Title | Expander Content}
+  @endverbatim
+  @expander{Expander Title | Expander Content}
+
 * Tabs
   @verbatim
 @tabs{
@@ -140,20 +157,6 @@ We have defined some custom aliases to simplify documenting examples.
     @tab{ Tab 1 Title | Tab 1 Content }
     @tab{ Tab 2 Title | Tab 2 Content }
   }
-* Markers
-  * \@red{Content}<br>
-    @red{This is red.}
-  * \@blue{Content}<br>
-    @blue{This is blue.}
-  * \@green{Content}<br>
-    @green{This is green.}
-  * \@yellow{Content}<br>
-    @yellow{This is yellow.}
-* Expander
-  @verbatim
-@expander{Expander Title | Expander Content}
-@endverbatim
-  @expander{Expander Title | Expander Content}
 
 <details style="display: none;">
   <summary></summary>
