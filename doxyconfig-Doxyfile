@@ -55,24 +55,24 @@ HTML_EXTRA_STYLESHEET += doxyconfig.css
 ALIASES = ""
 ALIASES += "examples=^^**Examples**^^@code{.cpp}"
 ALIASES += "examples_end=@endcode^^"
-# fontawsome
+# fontawesome
 ALIASES += "fa_icon{1}=<i class=\"\1\"></i>"
 # admonitions
 ALIASES += "_admonition{4|}=<dl class=\"\2\"><dt>@fa_icon{\3} \1</dt><dd>\4</dd></dl>"
 ALIASES += "_admonition_b{4|}=<dl class=\"\2\"><dt><b><a style=\"pointer-events: none; cursor: default;\" class=\"el\" href=\"\">@fa_icon{\3} \1</a></b></dt><dd>\4</dd></dl>"
 # see: https://jothepro.github.io/doxygen-awesome-css/class_my_library_1_1_example.html#autotoc_md6
 ALIASES += "admonition{2|}=@_admonition_b{\1 | todo | fa-solid fa-bars | \2}"
-ALIASES += "attention{1}=@_admonition{Attention | bug | fa-solid fa-triangle-exclamation | \1}"
-ALIASES += "caution{1}=@_admonition{Caution | section warning | fa-solid fa-triangle-exclamation | \1}"
-ALIASES += "danger{1}=@_admonition{Danger | bug | fa-solid fa-circle-exclamation | \1}"
+ALIASES += "attention{1}=@_admonition{Attention | section attention | | \1}"
+ALIASES += "caution{1}=@_admonition{Caution | section warning | | \1}"
+ALIASES += "danger{1}=@_admonition{Danger | bug | fa-solid fa-triangle-exclamation | \1}"
 ALIASES += "error{1}=@_admonition{Error | bug | fa-solid fa-circle-xmark | \1}"
-ALIASES += "hint{1}=@_admonition{Hint | section pre | fa-solid fa-circle-question | \1}"
-ALIASES += "important{1}=@_admonition_b{Important | todo | fa-solid fa-fire | \1}"
-ALIASES += "note{1}=@_admonition{Note | section note | fa-solid fa-pencil | \1}"
-ALIASES += "seealso{1}=@_admonition{See also | section note | fa-solid fa-circle-info | \1}"
-ALIASES += "tip{1}=@_admonition{Tip | section pre | fa-solid fa-circle-info | \1}"
-ALIASES += "todo{1}=@_admonition{TODO | section deprecated | fa-solid fa-pencil | \1}"
-ALIASES += "warning{1}=@_admonition{Warning | section warning | fa-solid fa-triangle-exclamation | \1}"
+ALIASES += "hint{1}=@_admonition{Hint | section pre | | \1}"
+ALIASES += "important{1}=@_admonition{Important | section important | | \1}"
+ALIASES += "note{1}=@_admonition{Note | section note | | \1}"
+ALIASES += "seealso{1}=@_admonition{See also | section remark | | \1}"
+ALIASES += "tip{1}=@_admonition{Tip | section pre | | \1}"
+ALIASES += "todo{1}=@_admonition{TODO | section deprecated | | \1}"
+ALIASES += "warning{1}=@_admonition{Warning | section warning | | \1}"
 # tabs
 # see: https://github.com/jothepro/doxygen-awesome-css/discussions/146
 ALIASES += tab{2|}="@htmlonly<li><b class=\"tab-title\">@endhtmlonly^^\1^^@htmlonly</b>@endhtmlonly^^\2^^@htmlonly</li>@endhtmlonly"

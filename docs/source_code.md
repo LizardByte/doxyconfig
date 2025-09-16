@@ -96,6 +96,65 @@ enum class MyEnum
 };
 @endverbatim
 
+### Admonitions
+
+#### Standard Admonitions
+
+* @verbatim@attention Attention needed.@endverbatim
+  @attention Attention needed.
+
+* @verbatim@important An important message.@endverbatim
+  @important An important message.
+
+* @verbatim@note A note.@endverbatim
+  @note A note.
+
+* @verbatim@pre A precondition.@endverbatim
+  @pre A precondition.
+
+* @verbatim@remark Some remarks.@endverbatim
+  @remark Some remarks.
+
+* @verbatim@warning - A warning.@endverbatim
+  @warning A warning.
+
+#### GitHub Flavored Markdown Admonitions
+
+* @verbatim
+> [!CAUTION]
+> This is a caution.
+@endverbatim
+  > [!CAUTION]
+  > This is a caution.
+
+* @verbatim
+> [!IMPORTANT]
+> This is important.
+@endverbatim
+  > [!IMPORTANT]
+  > This is important.
+
+* @verbatim
+> [!NOTE]
+> This is a note.
+@endverbatim
+  > [!NOTE]
+  > This is a note.
+
+* @verbatim
+> [!TIP]
+> This is a tip.
+@endverbatim
+  > [!TIP]
+  > This is a tip.
+
+* @verbatim
+> [!WARNING]
+> This is a warning.
+@endverbatim
+  > [!WARNING]
+  > This is a warning.
+
 ### Custom Aliases
 
 We have defined some custom aliases to simplify documenting examples.
