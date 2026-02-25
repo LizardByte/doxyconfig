@@ -56,6 +56,12 @@ if(NOT ${CMAKE_PROJECT_NAME} STREQUAL "Sunshine")
     )
 endif()
 
+# set SHARED_WEB_FILES depends
+set(SHARED_WEB_FILES_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@lizardbyte/shared-web/dist/crowdin.js"
+        "${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@lizardbyte/shared-web/dist/crowdin-doxygen-css.css"
+)
+
 # set FONT_AWESOME_FILES depends
 set(FONT_AWESOME_FILES_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@fortawesome/fontawesome-free/css/all.min.css"
@@ -64,12 +70,25 @@ set(FONT_AWESOME_FILES_DEPENDS
 )
 
 find_program(NPM npm REQUIRED)
-add_custom_target(_docs_fontawesome_install
+add_custom_target(_docs_npm_install
         COMMENT "Installing node modules"
-        BYPRODUCTS ${FONT_AWESOME_FILES_DEPENDS}
-        COMMAND ${NPM} install
+        BYPRODUCTS ${SHARED_WEB_FILES_DEPENDS} ${FONT_AWESOME_FILES_DEPENDS}
+        COMMAND ${NPM} install --ignore-scripts
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         VERBATIM
+)
+
+# copy shared-web files
+add_custom_command(
+        OUTPUT  SHARED_WEB_FILES
+        COMMAND ${CMAKE_COMMAND}
+                -E copy ${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@lizardbyte/shared-web/dist/crowdin.js
+                    ${DOXYGEN_BUILD_DIR_CMAKE}/html/assets/shared-web/crowdin.js
+        COMMAND ${CMAKE_COMMAND}
+                -E copy ${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@lizardbyte/shared-web/dist/crowdin-doxygen-css.css
+                    ${DOXYGEN_BUILD_DIR_CMAKE}/html/assets/shared-web/crowdin-doxygen-css.css
+        COMMENT "Copying shared-web files"
+        DEPENDS ${SHARED_WEB_FILES_DEPENDS}
 )
 
 # copy Font Awesome files
@@ -111,5 +130,5 @@ add_custom_target(docs ALL
             DOXYCONFIG_THREADS=${DOXYGEN_NUM_THREADS}
             ${DOXYGEN_EXECUTABLE} doxyconfig-Doxyfile
         VERBATIM
-        DEPENDS FONT_AWESOME_FILES
+        DEPENDS FONT_AWESOME_FILES SHARED_WEB_FILES
 )
