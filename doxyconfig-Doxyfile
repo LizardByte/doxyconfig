@@ -51,6 +51,10 @@ HTML_HEADER = doxyconfig-header.html
 HTML_EXTRA_FILES += doxyconfig-readthedocs-search.js
 HTML_EXTRA_STYLESHEET += doxyconfig.css
 
+# @lizardbyte/shared-web
+HTML_EXTRA_FILES += ../node_modules/@lizardbyte/shared-web/dist/crowdin.js
+HTML_EXTRA_STYLESHEET += ../node_modules/@lizardbyte/shared-web/dist/crowdin-doxygen-css.css
+
 # custom aliases
 ALIASES = ""
 ALIASES += "examples=^^**Examples**^^@code{.cpp}"
