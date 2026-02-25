@@ -4,6 +4,6 @@
     "@lizardbyte/shared-web": "2026.219.33142"
   },
   "devDependencies": {
-    "jquery": "^3.7.1"
+    "jquery": "^4.0.0"
   }
 }
