@@ -30,6 +30,7 @@ function install_node_modules {
   echo "Creating output directories"
   mkdir -p "${READTHEDOCS_OUTPUT}html/assets/fontawesome/css"
   mkdir -p "${READTHEDOCS_OUTPUT}html/assets/fontawesome/js"
+  mkdir -p "${READTHEDOCS_OUTPUT}html/assets/shared-web"
 
   echo "Installing node modules"
   pushd "${DOXYCONFIG_DIR}"
@@ -43,6 +44,12 @@ function install_node_modules {
     "${READTHEDOCS_OUTPUT}html/assets/fontawesome/js"
   cp -r "${DOXYCONFIG_DIR}/node_modules/@fortawesome/fontawesome-free/webfonts" \
     "${READTHEDOCS_OUTPUT}html/assets/fontawesome/"
+
+  echo "Copying shared-web files"
+  cp "${DOXYCONFIG_DIR}/node_modules/@lizardbyte/shared-web/dist/crowdin.js" \
+    "${READTHEDOCS_OUTPUT}html/assets/shared-web/"
+  cp "${DOXYCONFIG_DIR}/node_modules/@lizardbyte/shared-web/dist/crowdin-doxygen-css.css" \
+    "${READTHEDOCS_OUTPUT}html/assets/shared-web/"
 }
 
 function merge_doxyconfigs {
