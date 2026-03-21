@@ -54,9 +54,11 @@ class ReadtheDocsSearch {
 
     if (document.body) {
       observer.observe(document.body, { childList: true, subtree: true });
+      ReadtheDocsSearch._attachLiveSearch();
     } else {
       document.addEventListener('DOMContentLoaded', function() {
         observer.observe(document.body, { childList: true, subtree: true });
+        ReadtheDocsSearch._attachLiveSearch();
       });
     }
 
@@ -70,6 +72,14 @@ class ReadtheDocsSearch {
         setTimeout(function() {
           ReadtheDocsSearch._searchFieldHadFocus = false;
         }, 0);
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('RTDLiveResults');
+      const field = document.getElementById('MSearchField');
+      if (dropdown && !dropdown.contains(e.target) && e.target !== field) {
+        ReadtheDocsSearch._hideLiveResults();
       }
     });
 
@@ -120,6 +130,162 @@ class ReadtheDocsSearch {
         ReadtheDocsSearch.fetchResults(url, ctx);
       });
     }
+  }
+
+  static _attachLiveSearch() {
+    let debounceTimer = null;
+
+    function onInput() {
+      clearTimeout(debounceTimer);
+      const field = document.getElementById('MSearchField');
+      if (!field) return;
+      const query = field.value.trim();
+      if (!query) {
+        ReadtheDocsSearch._hideLiveResults();
+        return;
+      }
+      debounceTimer = setTimeout(function() {
+        ReadtheDocsSearch._runLiveSearch(query);
+      }, 300);
+    }
+
+    function attachToField() {
+      const field = document.getElementById('MSearchField');
+      if (!field || field._rtdLiveSearchAttached) return;
+      field._rtdLiveSearchAttached = true;
+      field.setAttribute('autocomplete', 'off');
+      field.addEventListener('input', onInput);
+      field.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          ReadtheDocsSearch._hideLiveResults();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          ReadtheDocsSearch._moveLiveResultFocus(1);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          ReadtheDocsSearch._moveLiveResultFocus(-1);
+        } else if (e.key === 'Enter') {
+          const focused = document.querySelector('#RTDLiveResults .rtd-live-item:focus');
+          if (focused) {
+            e.preventDefault();
+            focused.click();
+          }
+        }
+      });
+    }
+
+    attachToField();
+
+    // Re-attach when the DOM changes (e.g. menu.js recreates the field on mobile)
+    const fieldObserver = new MutationObserver(attachToField);
+    fieldObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
+  static _runLiveSearch(query) {
+    const projectSlug = ReadtheDocsSearch.getMetaValue("readthedocs-project-slug") || "doxyconfig";
+    const projectVersion = ReadtheDocsSearch.getMetaValue("readthedocs-version-slug") || "latest";
+
+    const versionReady = /^\d+$/.test(projectVersion)
+      ? ReadtheDocsSearch.getReadTheDocsDefaultVersion(projectSlug)
+      : Promise.resolve(projectVersion);
+
+    versionReady.then(function(resolvedVersion) {
+      const url = `${ReadtheDocsSearch.serverUrl}search/?q=project:${projectSlug}/${resolvedVersion}+${query}&page=1&page_size=5`;
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function(data) {
+          ReadtheDocsSearch._showLiveResults(query, data.results || []);
+        },
+        error: function() {
+          ReadtheDocsSearch._hideLiveResults();
+        }
+      });
+    });
+  }
+
+  static _showLiveResults(query, results) {
+    let dropdown = document.getElementById('RTDLiveResults');
+    if (!dropdown) {
+      dropdown = document.createElement('div');
+      dropdown.id = 'RTDLiveResults';
+      document.body.appendChild(dropdown);
+    }
+
+    dropdown.innerHTML = '';
+
+    if (results.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'rtd-live-empty';
+      empty.textContent = 'No results found.';
+      dropdown.appendChild(empty);
+    } else {
+      const list = document.createElement('ul');
+      list.className = 'rtd-live-list';
+      for (const item of results) {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.className = 'rtd-live-item';
+        a.href = `${item.domain}${item.path}`;
+        a.tabIndex = 0;
+
+        const title = document.createElement('span');
+        title.className = 'rtd-live-title';
+        title.textContent = item.title;
+        a.appendChild(title);
+
+        if (item.blocks && item.blocks.length > 0) {
+          const snippet = document.createElement('span');
+          snippet.className = 'rtd-live-snippet';
+          let snipHtml = item.blocks[0].highlights.content.join(' … ');
+          snipHtml = snipHtml.replaceAll(/<span>(.*?)<\/span>/g, '<mark>$1</mark>');
+          snippet.innerHTML = snipHtml;
+          a.appendChild(snippet);
+        }
+
+        li.appendChild(a);
+        list.appendChild(li);
+      }
+      dropdown.appendChild(list);
+    }
+
+    ReadtheDocsSearch._positionLiveResults(dropdown);
+    dropdown.style.display = 'block';
+  }
+
+  static _positionLiveResults(dropdown) {
+    const field = document.getElementById('MSearchField');
+    const box = document.getElementById('MSearchBox');
+    const anchor = box || field;
+    if (!anchor) return;
+    const rect = anchor.getBoundingClientRect();
+    const scrollY = window.scrollY;
+    const viewportWidth = document.documentElement.clientWidth;
+    dropdown.style.top = `${rect.bottom + scrollY}px`;
+    dropdown.style.left = '';
+    dropdown.style.right = `${viewportWidth - rect.right}px`;
+    dropdown.style.minWidth = `${Math.max(rect.width, 260)}px`;
+  }
+
+  static _hideLiveResults() {
+    const dropdown = document.getElementById('RTDLiveResults');
+    if (dropdown) {
+      dropdown.style.display = 'none';
+    }
+  }
+
+  static _moveLiveResultFocus(direction) {
+    const items = Array.from(document.querySelectorAll('#RTDLiveResults .rtd-live-item'));
+    if (items.length === 0) return;
+    const current = document.activeElement;
+    const idx = items.indexOf(current);
+    let next;
+    if (idx === -1) {
+      next = direction > 0 ? items[0] : items.at(-1);
+    } else {
+      next = items[idx + direction];
+    }
+    if (next) next.focus();
   }
 
   static fetchResults(url, ctx) {
