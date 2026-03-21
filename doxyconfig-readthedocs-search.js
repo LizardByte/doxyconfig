@@ -103,49 +103,48 @@ class ReadtheDocsSearch {
       let url = `${ReadtheDocsSearch.serverUrl}search/?q=project:${projectSlug}/${projectVersion}+${query}&page=${page + 1}&page_size=${count}`;
       console.log(url);
 
-      let firstUrl = true;
+      const ctx = {
+        query, resultSummary, resultList, titleInterval, pageTitle, originalTitle, firstUrl: true
+      };
 
-      function fetchResults(url) {
-        $.ajax({
-          url: url,
-          dataType: 'json',
-          success: function (data) {
-            // Add the query to the search field
-            // This seems only be working if applied in the ajax success function...
-            // maybe the field is not available before this point
-            $('#MSearchField').val(query);
-
-            if (firstUrl) {
-              if (data.count > 0) {
-                if (data.count === 1) {
-                  resultSummary.innerHTML = ReadtheDocsSearch.searchResultsText[1];
-                } else {
-                  resultSummary.innerHTML = ReadtheDocsSearch.searchResultsText[2].replace(/\$num/, data.count);
-                }
-              } else {
-                resultSummary.innerHTML = ReadtheDocsSearch.searchResultsText[0];
-              }
-            }
-
-            $.each(data.results, function (i, item) {
-              ReadtheDocsSearch.appendResultItem(resultList, item);
-            });
-
-            // Add pagination
-            firstUrl = false;
-            if (data.next) {
-              fetchResults(data.next);
-            } else {
-              // Clear the interval when the search is complete
-              clearInterval(titleInterval);
-              pageTitle.text(originalTitle);
-            }
-          }
-        });
-      }
-
-      fetchResults(url);
+      ReadtheDocsSearch.fetchResults(url, ctx);
     }
+  }
+
+  static fetchResults(url, ctx) {
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      success: function(data) {
+        // Add the query to the search field
+        // This seems only be working if applied in the ajax success function...
+        // maybe the field is not available before this point
+        $('#MSearchField').val(ctx.query);
+
+        if (ctx.firstUrl) {
+          if (data.count === 1) {
+            ctx.resultSummary.innerHTML = ReadtheDocsSearch.searchResultsText[1];
+          } else if (data.count > 1) {
+            ctx.resultSummary.innerHTML = ReadtheDocsSearch.searchResultsText[2].replace(/\$num/, data.count);
+          } else {
+            ctx.resultSummary.innerHTML = ReadtheDocsSearch.searchResultsText[0];
+          }
+          ctx.firstUrl = false;
+        }
+
+        $.each(data.results, function(i, item) {
+          ReadtheDocsSearch.appendResultItem(ctx.resultList, item);
+        });
+
+        if (data.next) {
+          ReadtheDocsSearch.fetchResults(data.next, ctx);
+        } else {
+          // Clear the interval when the search is complete
+          clearInterval(ctx.titleInterval);
+          ctx.pageTitle.text(ctx.originalTitle);
+        }
+      }
+    });
   }
 
   static appendResultItem(resultList, item) {
