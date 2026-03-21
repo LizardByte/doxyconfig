@@ -7,7 +7,7 @@ class ReadtheDocsSearch {
 
   static get serverUrl() {
     const serverUrlSuffix = '_/api/v3/';
-    const domainName = window.location.hostname;
+    const domainName = globalThis.location.hostname;
     console.log(`Domain name: ${domainName}`);
 
     if (domainName === 'localhost') {
@@ -62,7 +62,7 @@ class ReadtheDocsSearch {
       }
     });
 
-    window.searchFor = function(query, page, count) {
+    globalThis.searchFor = function(query, page, count) {
       const results = $('#searchresults');
 
       // Get the title
@@ -128,38 +128,7 @@ class ReadtheDocsSearch {
             }
 
             $.each(data.results, function (i, item) {
-              let resultItem = document.createElement('li');
-              resultItem.className = 'search-result';
-              let resultItemUrl = `${item.domain}${item.path}`;
-              let resultItemTitle = item.title;
-              let resultItemType = item.type;  // todo... we can display results differently based on type
-              let resultItemTitleLink = document.createElement('a');
-              let resultItemTitleHeading = document.createElement('h3');
-              resultItemTitleHeading.appendChild(resultItemTitleLink);
-              resultItemTitleLink.href = resultItemUrl;
-              resultItemTitleLink.textContent = resultItemTitle;
-              resultItem.append(resultItemTitleHeading);
-              resultList.append(resultItem);
-
-              let resultItemParagraph = document.createElement('p');
-              resultItemParagraph.className = 'context';
-              for (let i = 0; i < item.blocks.length; i++) {
-                let blockContent = item.blocks[i].highlights.content.join(', ');
-
-                // Find all <span> tags and ensure they are highlighted
-                blockContent = blockContent.replace(/<span>(.*?)<\/span>/g, '<span class="highlighted">$1</span>');
-                resultItemParagraph.innerHTML += blockContent;
-
-                let blockName = `#${item.blocks[i].title.toLowerCase().replace(' ', '-')}`;
-                let blockUrl = resultItemUrl + blockName;
-                let blockLink = document.createElement('a');
-                blockLink.href = blockUrl;
-                blockLink.textContent = "More...";
-                resultItemParagraph.append(document.createTextNode(' '));
-                resultItemParagraph.append(blockLink);
-                resultItemParagraph.append(document.createElement('br'));
-              }
-              resultItem.append(resultItemParagraph);
+              ReadtheDocsSearch.appendResultItem(resultList, item);
             });
 
             // Add pagination
@@ -177,6 +146,37 @@ class ReadtheDocsSearch {
 
       fetchResults(url);
     }
+  }
+
+  static appendResultItem(resultList, item) {
+    const resultItem = document.createElement('li');
+    resultItem.className = 'search-result';
+    const resultItemUrl = `${item.domain}${item.path}`;
+    const resultItemTitleLink = document.createElement('a');
+    const resultItemTitleHeading = document.createElement('h3');
+    resultItemTitleHeading.appendChild(resultItemTitleLink);
+    resultItemTitleLink.href = resultItemUrl;
+    resultItemTitleLink.textContent = item.title;
+    resultItem.append(resultItemTitleHeading);
+    resultList.append(resultItem);
+
+    const resultItemParagraph = document.createElement('p');
+    resultItemParagraph.className = 'context';
+    for (const block of item.blocks) {
+      let blockContent = block.highlights.content.join(', ');
+      blockContent = blockContent.replaceAll(/<span>(.*?)<\/span>/g, '<span class="highlighted">$1</span>');
+      resultItemParagraph.innerHTML += blockContent;
+
+      const blockName = `#${block.title.toLowerCase().replaceAll(' ', '-')}`;
+      const blockUrl = resultItemUrl + blockName;
+      const blockLink = document.createElement('a');
+      blockLink.href = blockUrl;
+      blockLink.textContent = "More...";
+      resultItemParagraph.append(document.createTextNode(' '));
+      resultItemParagraph.append(blockLink);
+      resultItemParagraph.append(document.createElement('br'));
+    }
+    resultItem.append(resultItemParagraph);
   }
 
   // Function to extract the value of a specified Read the Docs meta property

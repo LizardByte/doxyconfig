@@ -5,7 +5,7 @@ function setup_conda_env {
   echo "Setting up conda environment"
   local environment_file="third-party/doxyconfig/environment.yml"
 
-  if [ "${DOXYCONFIG_DIR}" == "." ]; then
+  if [[ "${DOXYCONFIG_DIR}" == "." ]]; then
     mkdir -p third-party/doxyconfig
     cp environment.yml $environment_file
     cp -r doxygen-awesome-css third-party/doxyconfig/
@@ -16,6 +16,7 @@ function setup_conda_env {
 
   echo "conda env create --quiet --name ${READTHEDOCS_VERSION} --file $environment_file"
   conda env create --quiet --name "${READTHEDOCS_VERSION}" --file "$environment_file"
+  return 0
 }
 
 function install_icons {
@@ -24,6 +25,7 @@ function install_icons {
     -O "${READTHEDOCS_OUTPUT}lizardbyte.ico"
   wget "https://raw.githubusercontent.com/LizardByte/.github/master/branding/logos/logo-128x128.png" \
     -O "${READTHEDOCS_OUTPUT}lizardbyte.png"
+  return 0
 }
 
 function install_node_modules {
@@ -50,15 +52,18 @@ function install_node_modules {
     "${READTHEDOCS_OUTPUT}html/assets/shared-web/"
   cp "${DOXYCONFIG_DIR}/node_modules/@lizardbyte/shared-web/dist/crowdin-doxygen-css.css" \
     "${READTHEDOCS_OUTPUT}html/assets/shared-web/"
+  return 0
 }
 
 function merge_doxyconfigs {
+  local docs_dir="./docs/"
   echo "Merging doxygen configs"
-  cp "${DOXYCONFIG_DIR}/doxyconfig-Doxyfile" "./docs/"
-  cp "${DOXYCONFIG_DIR}/doxyconfig-header.html" "./docs/"
-  cp "${DOXYCONFIG_DIR}/doxyconfig.css" "./docs/"
-  cp "${DOXYCONFIG_DIR}/doxyconfig-readthedocs-search.js" "./docs/"
-  cat "./docs/Doxyfile" >> "./docs/doxyconfig-Doxyfile"
+  cp "${DOXYCONFIG_DIR}/doxyconfig-Doxyfile" "${docs_dir}"
+  cp "${DOXYCONFIG_DIR}/doxyconfig-header.html" "${docs_dir}"
+  cp "${DOXYCONFIG_DIR}/doxyconfig.css" "${docs_dir}"
+  cp "${DOXYCONFIG_DIR}/doxyconfig-readthedocs-search.js" "${docs_dir}"
+  cat "${docs_dir}Doxyfile" >> "${docs_dir}doxyconfig-Doxyfile"
+  return 0
 }
 
 function build_docs {
@@ -66,6 +71,7 @@ function build_docs {
   pushd docs
   doxygen doxyconfig-Doxyfile
   popd
+  return 0
 }
 
 setup_conda_env
