@@ -105,20 +105,20 @@ class ReadtheDocsSearch {
       let projectSlug = ReadtheDocsSearch.getMetaValue("readthedocs-project-slug") || "doxyconfig";
       let projectVersion = ReadtheDocsSearch.getMetaValue("readthedocs-version-slug") || "latest";
 
-      // pull requests are not indexed, so use the default version
-      if (/^\d+$/.test(projectVersion)) {
-        console.log('Pull request detected, getting default version from ReadTheDocs API');
-        ReadtheDocsSearch.getReadTheDocsDefaultVersion(projectSlug);
-      }
-
-      let url = `${ReadtheDocsSearch.serverUrl}search/?q=project:${projectSlug}/${projectVersion}+${query}&page=${page + 1}&page_size=${count}`;
-      console.log(url);
-
       const ctx = {
         query, resultSummary, resultList, titleInterval, pageTitle, originalTitle, firstUrl: true
       };
 
-      ReadtheDocsSearch.fetchResults(url, ctx);
+      // pull requests are not indexed, so use the default version
+      const versionReady = /^\d+$/.test(projectVersion)
+        ? ReadtheDocsSearch.getReadTheDocsDefaultVersion(projectSlug)
+        : Promise.resolve(projectVersion);
+
+      versionReady.then(function(resolvedVersion) {
+        const url = `${ReadtheDocsSearch.serverUrl}search/?q=project:${projectSlug}/${resolvedVersion}+${query}&page=${page + 1}&page_size=${count}`;
+        console.log(url);
+        ReadtheDocsSearch.fetchResults(url, ctx);
+      });
     }
   }
 
@@ -203,19 +203,22 @@ class ReadtheDocsSearch {
   }
 
   static getReadTheDocsDefaultVersion(project) {
-    let url = `${ReadtheDocsSearch.serverUrl}projects/${project}/`;
-    $.ajax({
-      url: url,
-      dataType: 'json',
-      success: function(data) {
-        console.log(data);
-        return data.default_version;
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.error('Error:', textStatus, errorThrown);
-        console.log(`Cannot determine default version for ${project}, assuming "latest"`);
-        return "latest";
-      }
-    })
+    console.log('Pull request detected, getting default version from ReadTheDocs API');
+    const url = `${ReadtheDocsSearch.serverUrl}projects/${project}/`;
+    return new Promise(function(resolve) {
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function(data) {
+          console.log(data);
+          resolve(data.default_version || 'latest');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error('Error:', textStatus, errorThrown);
+          console.log(`Cannot determine default version for ${project}, assuming "latest"`);
+          resolve('latest');
+        }
+      });
+    });
   }
 }
