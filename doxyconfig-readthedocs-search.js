@@ -22,19 +22,23 @@ class ReadtheDocsSearch {
   }
 
   static init() {
-    const originalSearchBox = globalThis.SearchBox;
+    const realSearchBox = globalThis.SearchBox;
     globalThis.SearchBox = function(name, resultsPath, extension) {
-      originalSearchBox.call(this, name, resultsPath, extension);
+      if (realSearchBox) {
+        realSearchBox.call(this, name, resultsPath, extension);
+      }
 
       this.OnSearchFieldFocus = function() {};
 
-      const originalCloseResultsWindow = this.CloseResultsWindow.bind(this);
+      const originalClose = this.CloseResultsWindow;
       this.CloseResultsWindow = function() {
-        const field = this.DOMSearchField();
+        if (originalClose) {
+          originalClose.call(this);
+        }
+        const field = this.DOMSearchField ? this.DOMSearchField() : null;
         if (field?.id === document.activeElement?.id) {
           return;
         }
-        originalCloseResultsWindow();
       };
     };
 
@@ -47,7 +51,14 @@ class ReadtheDocsSearch {
         field.focus();
       }
     });
-    observer.observe(document.body, { childList: true, subtree: true });
+
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    } else {
+      document.addEventListener('DOMContentLoaded', function() {
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
+    }
 
     document.addEventListener('focusin', function(e) {
       if (e.target?.id === 'MSearchField') {
