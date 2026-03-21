@@ -22,19 +22,45 @@ class ReadtheDocsSearch {
   }
 
   static init() {
-    window.SearchBox = function(name, resultsPath, extension) {
-      // live search
-      // TODO
-      this.DOMSearchField = () => document.getElementById("MSearchField");
-      this.DOMSearchBox = () => document.getElementById("MSearchBox");
-      this.OnSearchFieldFocus = isActive => {
-        if (isActive) {
-          this.DOMSearchBox().className = 'MSearchBoxActive';
-        } else {
-          this.DOMSearchBox().className = 'MSearchBoxInactive';
+    const originalSearchBox = globalThis.SearchBox;
+    globalThis.SearchBox = function(name, resultsPath, extension) {
+      originalSearchBox.call(this, name, resultsPath, extension);
+
+      this.OnSearchFieldFocus = function() {};
+
+      const originalCloseResultsWindow = this.CloseResultsWindow.bind(this);
+      this.CloseResultsWindow = function() {
+        const field = this.DOMSearchField();
+        if (field?.id === document.activeElement?.id) {
+          return;
         }
+        originalCloseResultsWindow();
+      };
+    };
+
+    // Re-focus the search input if it is replaced in the DOM while focused.
+    // On mobile, viewport resize (triggered by the OSK opening) can cause
+    // menu.js resetState() to recreate the input element, losing focus.
+    const observer = new MutationObserver(function() {
+      const field = document.getElementById('MSearchField');
+      if (field && ReadtheDocsSearch._searchFieldHadFocus) {
+        field.focus();
       }
-    }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    document.addEventListener('focusin', function(e) {
+      if (e.target?.id === 'MSearchField') {
+        ReadtheDocsSearch._searchFieldHadFocus = true;
+      }
+    });
+    document.addEventListener('focusout', function(e) {
+      if (e.target?.id === 'MSearchField') {
+        setTimeout(function() {
+          ReadtheDocsSearch._searchFieldHadFocus = false;
+        }, 0);
+      }
+    });
 
     window.searchFor = function(query, page, count) {
       const results = $('#searchresults');
