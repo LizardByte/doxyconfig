@@ -73,7 +73,7 @@ find_program(NPM npm REQUIRED)
 add_custom_target(_docs_npm_install
         COMMENT "Installing node modules"
         BYPRODUCTS ${SHARED_WEB_FILES_DEPENDS} ${FONT_AWESOME_FILES_DEPENDS}
-        COMMAND ${NPM} install --ignore-scripts
+        COMMAND ${NPM} ci --ignore-scripts
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         VERBATIM
 )
