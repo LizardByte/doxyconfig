@@ -36,7 +36,7 @@ function install_node_modules {
 
   echo "Installing node modules"
   pushd "${DOXYCONFIG_DIR}"
-  npm install --ignore-scripts
+  npm ci --ignore-scripts
   popd
 
   echo "Copying FontAwesome files"

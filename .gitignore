@@ -7,7 +7,6 @@ cmake-build-*/
 
 # npm
 node_modules/
-package-lock.json
 
 # ignore doxyconfig files
 docs/doxyconfig*
