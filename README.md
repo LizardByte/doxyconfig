@@ -1,6 +1,16 @@
-# doxyconfig
+<div align="center">
+  <img
+    src="https://raw.githubusercontent.com/LizardByte/.github/refs/heads/master/branding/logos/logo.svg"
+    alt="LizardByte icon"
+    width="256"
+  />
+  <h1 align="center">doxyconfig</h1>
+  <h4 align="center">Common doxygen config for LizardByte projects.</h4>
+</div>
 
-This is a common Doxygen config for LizardByte projects.
+<div align="center">
+  <a href="https://sonarcloud.io/project/overview?id=LizardByte_doyxconfig"><img src="https://img.shields.io/sonar/quality_gate/LizardByte_doxyconfig.svg?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge&logo=sonarqubecloud&label=sonarcloud" alt="SonarCloud"></a>
+</div>
 
 ## Usage
 
