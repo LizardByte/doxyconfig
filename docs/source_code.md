@@ -161,8 +161,8 @@ We have defined some custom aliases to simplify documenting examples.
 
 * \@examples - Start of an example block. This will format the following text as `cpp`.
 * \@examples_end - End of an example block.
-* \@fa_icon{font awsome definition} - Insert a Font Awesome icon. Give the icon style and name as arguments.
-  e.g. \@fa_icon{fa-solid fa-check}.
+* \@lucide_icon{icon name} - Insert a Lucide icon. Give the icon name as an argument.
+  e.g. \@lucide_icon{check}.
 * Admonitions
   * \@admonition{Custom Title | Content }
     @admonition{The one with the custom titles | It’s got a certain charm to it.}

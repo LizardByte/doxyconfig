@@ -44,6 +44,7 @@ HTML_EXTRA_FILES += ../third-party/doxyconfig/doxygen-awesome-css/doxygen-awesom
 HTML_EXTRA_FILES += ../third-party/doxyconfig/doxygen-awesome-css/doxygen-awesome-paragraph-link.js
 HTML_EXTRA_FILES += ../third-party/doxyconfig/doxygen-awesome-css/doxygen-awesome-interactive-toc.js
 HTML_EXTRA_FILES += ../third-party/doxyconfig/doxygen-awesome-css/doxygen-awesome-tabs.js
+HTML_EXTRA_FILES += doxyconfig-icons.js
 HTML_EXTRA_STYLESHEET = ../third-party/doxyconfig/doxygen-awesome-css/doxygen-awesome.css
 HTML_HEADER = doxyconfig-header.html
 
@@ -55,24 +56,24 @@ HTML_EXTRA_STYLESHEET += doxyconfig.css
 ALIASES = ""
 ALIASES += "examples=^^**Examples**^^@code{.cpp}"
 ALIASES += "examples_end=@endcode^^"
-# fontawesome
-ALIASES += "fa_icon{1}=<i class=\"\1\"></i>"
+# lucide
+ALIASES += "lucide_icon{1}=<i data-lucide=\"\1\" aria-hidden=\"true\"></i>"
 # admonitions
-ALIASES += "_admonition{4|}=<dl class=\"\2\"><dt>@fa_icon{\3} \1</dt><dd>\4</dd></dl>"
-ALIASES += "_admonition_b{4|}=<dl class=\"\2\"><dt><b><a style=\"pointer-events: none; cursor: default;\" class=\"el\" href=\"\">@fa_icon{\3} \1</a></b></dt><dd>\4</dd></dl>"
+ALIASES += "_admonition{4|}=<dl class=\"\2\"><dt>@lucide_icon{\3} \1</dt><dd>\4</dd></dl>"
+ALIASES += "_admonition_b{4|}=<dl class=\"\2\"><dt><b><a style=\"pointer-events: none; cursor: default;\" class=\"el\" href=\"\">@lucide_icon{\3} \1</a></b></dt><dd>\4</dd></dl>"
 # see: https://jothepro.github.io/doxygen-awesome-css/class_my_library_1_1_example.html#autotoc_md6
-ALIASES += "admonition{2|}=@_admonition_b{\1 | todo | fa-solid fa-bars | \2}"
-ALIASES += "attention{1}=@_admonition{Attention | section attention | | \1}"
-ALIASES += "caution{1}=@_admonition{Caution | section warning | | \1}"
-ALIASES += "danger{1}=@_admonition{Danger | bug | fa-solid fa-triangle-exclamation | \1}"
-ALIASES += "error{1}=@_admonition{Error | bug | fa-solid fa-circle-xmark | \1}"
-ALIASES += "hint{1}=@_admonition{Hint | section pre | | \1}"
-ALIASES += "important{1}=@_admonition{Important | section important | | \1}"
-ALIASES += "note{1}=@_admonition{Note | section note | | \1}"
-ALIASES += "seealso{1}=@_admonition{See also | section remark | | \1}"
-ALIASES += "tip{1}=@_admonition{Tip | section pre | | \1}"
-ALIASES += "todo{1}=@_admonition{TODO | section deprecated | | \1}"
-ALIASES += "warning{1}=@_admonition{Warning | section warning | | \1}"
+ALIASES += "admonition{2|}=@_admonition_b{\1 | todo | menu | \2}"
+ALIASES += "attention{1}=@_admonition{Attention | section attention | circle-alert | \1}"
+ALIASES += "caution{1}=@_admonition{Caution | section warning | triangle-alert | \1}"
+ALIASES += "danger{1}=@_admonition{Danger | bug | triangle-alert | \1}"
+ALIASES += "error{1}=@_admonition{Error | bug | circle-x | \1}"
+ALIASES += "hint{1}=@_admonition{Hint | section pre | info | \1}"
+ALIASES += "important{1}=@_admonition{Important | section important | flame | \1}"
+ALIASES += "note{1}=@_admonition{Note | section note | sticky-note | \1}"
+ALIASES += "seealso{1}=@_admonition{See also | section remark | info | \1}"
+ALIASES += "tip{1}=@_admonition{Tip | section pre | info | \1}"
+ALIASES += "todo{1}=@_admonition{TODO | section deprecated | pencil | \1}"
+ALIASES += "warning{1}=@_admonition{Warning | section warning | triangle-alert | \1}"
 # tabs
 # see: https://github.com/jothepro/doxygen-awesome-css/discussions/146
 ALIASES += tab{2|}="@htmlonly<li><b class=\"tab-title\">@endhtmlonly^^\1^^@htmlonly</b>@endhtmlonly^^\2^^@htmlonly</li>@endhtmlonly"
