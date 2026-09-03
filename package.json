@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@fortawesome/fontawesome-free": "7.3.1",
-    "@lizardbyte/shared-web": "2026.812.190302"
+    "@lizardbyte/shared-web": "2026.812.190302",
+    "lucide": "1.40.0"
   }
 }

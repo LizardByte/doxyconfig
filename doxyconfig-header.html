@@ -24,10 +24,10 @@ $darkmode
 <link href="$relpath^$stylesheet" rel="stylesheet" type="text/css" />
 $extrastylesheet
 
-<!--FONTAWESOME START-->
-<link href="$relpath^assets/fontawesome/css/all.min.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="$relpath^assets/fontawesome/js/all.min.js"></script>
-<!--FONTAWESOME END-->
+<!--LUCIDE START-->
+<script type="text/javascript" src="$relpath^assets/lucide/lucide.min.js"></script>
+<script type="text/javascript" src="$relpath^doxyconfig-icons.js"></script>
+<!--LUCIDE END-->
 
 <!--LIZARDBYTE/SHARED-WEB START-->
 <link href="$relpath^assets/shared-web/crowdin-doxygen-css.css" rel="stylesheet" type="text/css" />
@@ -44,6 +44,7 @@ $extrastylesheet
 <script type="text/javascript" src="$relpath^doxygen-awesome-tabs.js"></script>
 <script type="text/javascript" src="$relpath^doxyconfig-readthedocs-search.js"></script>
 <script type="text/javascript">
+  DoxyconfigIcons.init()
   DoxygenAwesomeDarkModeToggle.init()
   DoxygenAwesomeFragmentCopyButton.init()
   DoxygenAwesomeParagraphLink.init()

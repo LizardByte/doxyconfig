@@ -30,8 +30,7 @@ function install_icons {
 
 function install_node_modules {
   echo "Creating output directories"
-  mkdir -p "${READTHEDOCS_OUTPUT}html/assets/fontawesome/css"
-  mkdir -p "${READTHEDOCS_OUTPUT}html/assets/fontawesome/js"
+  mkdir -p "${READTHEDOCS_OUTPUT}html/assets/lucide"
   mkdir -p "${READTHEDOCS_OUTPUT}html/assets/shared-web"
 
   echo "Installing node modules"
@@ -39,13 +38,9 @@ function install_node_modules {
   npm ci --ignore-scripts
   popd
 
-  echo "Copying FontAwesome files"
-  cp "${DOXYCONFIG_DIR}/node_modules/@fortawesome/fontawesome-free/css/all.min.css" \
-    "${READTHEDOCS_OUTPUT}html/assets/fontawesome/css"
-  cp "${DOXYCONFIG_DIR}/node_modules/@fortawesome/fontawesome-free/js/all.min.js" \
-    "${READTHEDOCS_OUTPUT}html/assets/fontawesome/js"
-  cp -r "${DOXYCONFIG_DIR}/node_modules/@fortawesome/fontawesome-free/webfonts" \
-    "${READTHEDOCS_OUTPUT}html/assets/fontawesome/"
+  echo "Copying Lucide files"
+  cp "${DOXYCONFIG_DIR}/node_modules/lucide/dist/umd/lucide.min.js" \
+    "${READTHEDOCS_OUTPUT}html/assets/lucide/"
 
   echo "Copying shared-web files"
   cp "${DOXYCONFIG_DIR}/node_modules/@lizardbyte/shared-web/dist/crowdin.js" \
@@ -60,6 +55,7 @@ function merge_doxyconfigs {
   echo "Merging doxygen configs"
   cp "${DOXYCONFIG_DIR}/doxyconfig-Doxyfile" "${docs_dir}"
   cp "${DOXYCONFIG_DIR}/doxyconfig-header.html" "${docs_dir}"
+  cp "${DOXYCONFIG_DIR}/doxyconfig-icons.js" "${docs_dir}"
   cp "${DOXYCONFIG_DIR}/doxyconfig.css" "${docs_dir}"
   cp "${DOXYCONFIG_DIR}/doxyconfig-readthedocs-search.js" "${docs_dir}"
   cat "${docs_dir}Doxyfile" >> "${docs_dir}doxyconfig-Doxyfile"

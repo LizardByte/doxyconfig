@@ -30,6 +30,7 @@ file(MAKE_DIRECTORY "${DOXYGEN_BUILD_DIR_CMAKE}/html")
 # copy files to build directory
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-header.html" DESTINATION "${SOURCE_DOCS_DIR}")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-Doxyfile" DESTINATION "${SOURCE_DOCS_DIR}")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-icons.js" DESTINATION "${SOURCE_DOCS_DIR}")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig.css" DESTINATION "${SOURCE_DOCS_DIR}")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-readthedocs-search.js" DESTINATION "${SOURCE_DOCS_DIR}")
 
@@ -62,17 +63,15 @@ set(SHARED_WEB_FILES_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@lizardbyte/shared-web/dist/crowdin-doxygen-css.css"
 )
 
-# set FONT_AWESOME_FILES depends
-set(FONT_AWESOME_FILES_DEPENDS
-        "${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@fortawesome/fontawesome-free/css/all.min.css"
-        "${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@fortawesome/fontawesome-free/js/all.min.js"
-        "${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@fortawesome/fontawesome-free/webfonts/"
+# set LUCIDE_FILES depends
+set(LUCIDE_FILES_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/node_modules/lucide/dist/umd/lucide.min.js"
 )
 
 find_program(NPM npm REQUIRED)
 add_custom_target(_docs_npm_install
         COMMENT "Installing node modules"
-        BYPRODUCTS ${SHARED_WEB_FILES_DEPENDS} ${FONT_AWESOME_FILES_DEPENDS}
+        BYPRODUCTS ${SHARED_WEB_FILES_DEPENDS} ${LUCIDE_FILES_DEPENDS}
         COMMAND ${NPM} ci --ignore-scripts
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         VERBATIM
@@ -91,20 +90,16 @@ add_custom_command(
         DEPENDS ${SHARED_WEB_FILES_DEPENDS}
 )
 
-# copy Font Awesome files
+# copy Lucide files
 add_custom_command(
-        OUTPUT  FONT_AWESOME_FILES
+        OUTPUT  LUCIDE_FILES
         COMMAND ${CMAKE_COMMAND}
-                -E copy ${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@fortawesome/fontawesome-free/css/all.min.css
-                    ${DOXYGEN_BUILD_DIR_CMAKE}/html/assets/fontawesome/css/all.min.css
+                -E make_directory ${DOXYGEN_BUILD_DIR_CMAKE}/html/assets/lucide
         COMMAND ${CMAKE_COMMAND}
-                -E copy ${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@fortawesome/fontawesome-free/js/all.min.js
-                    ${DOXYGEN_BUILD_DIR_CMAKE}/html/assets/fontawesome/js/all.min.js
-        COMMAND ${CMAKE_COMMAND}
-                -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/node_modules/@fortawesome/fontawesome-free/webfonts
-                    ${DOXYGEN_BUILD_DIR_CMAKE}/html/assets/fontawesome/webfonts
-        COMMENT "Copying Font Awesome files"
-        DEPENDS ${FONT_AWESOME_FILES_DEPENDS}
+                -E copy ${CMAKE_CURRENT_SOURCE_DIR}/node_modules/lucide/dist/umd/lucide.min.js
+                    ${DOXYGEN_BUILD_DIR_CMAKE}/html/assets/lucide/lucide.min.js
+        COMMENT "Copying Lucide files"
+        DEPENDS ${LUCIDE_FILES_DEPENDS}
 )
 
 # convert to relative path, so doxygen doesn't get confused on Windows
@@ -130,5 +125,5 @@ add_custom_target(docs ALL
             DOXYCONFIG_THREADS=${DOXYGEN_NUM_THREADS}
             ${DOXYGEN_EXECUTABLE} doxyconfig-Doxyfile
         VERBATIM
-        DEPENDS FONT_AWESOME_FILES SHARED_WEB_FILES
+        DEPENDS LUCIDE_FILES SHARED_WEB_FILES
 )
