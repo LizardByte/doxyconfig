@@ -43,6 +43,16 @@ dl.important dt {
     color: var(--todo-color-dark);
 }
 
+table.code-result-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+table.code-result-table td {
+    vertical-align: top;
+    width: 50%;
+}
+
 /* Live search dropdown */
 #RTDLiveResults {
     display: none;

@@ -76,8 +76,8 @@ ALIASES += "todo{1}=@_admonition{TODO | section deprecated | pencil | \1}"
 ALIASES += "warning{1}=@_admonition{Warning | section warning | triangle-alert | \1}"
 # tabs
 # see: https://github.com/jothepro/doxygen-awesome-css/discussions/146
-ALIASES += tab{2|}="@htmlonly<li><b class=\"tab-title\">@endhtmlonly^^\1^^@htmlonly</b>@endhtmlonly^^\2^^@htmlonly</li>@endhtmlonly"
-ALIASES += tabs{1}="@htmlonly<div class=\"tabbed\"><ul>@endhtmlonly^^\1^^@htmlonly</ul></div><br>@endhtmlonly"
+ALIASES += tab{2|}="<li><b class=\"tab-title\">\1</b>^^\2^^</li>"
+ALIASES += tabs{1}="<div class=\"tabbed\"><ul>^^\1^^</ul></div><br>"
 # markers
 ALIASES += red{1}="<span style=\"color:red\">\1</span>"
 ALIASES += blue{1}="<span style=\"color:blue\">\1</span>"
