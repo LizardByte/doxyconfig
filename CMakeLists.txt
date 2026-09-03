@@ -32,7 +32,6 @@ file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-header.html" DESTINATION "${SO
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-Doxyfile" DESTINATION "${SOURCE_DOCS_DIR}")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-icons.js" DESTINATION "${SOURCE_DOCS_DIR}")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig.css" DESTINATION "${SOURCE_DOCS_DIR}")
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-readthedocs-search.js" DESTINATION "${SOURCE_DOCS_DIR}")
 
 # append the "${SOURCE_DOCS_DIR}/Doxyfile to the Doxyfile-doxyconfig
 file(READ "${SOURCE_DOCS_DIR}/Doxyfile" DOXYFILE_CONTENTS)

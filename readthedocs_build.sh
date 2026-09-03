@@ -57,7 +57,6 @@ function merge_doxyconfigs {
   cp "${DOXYCONFIG_DIR}/doxyconfig-header.html" "${docs_dir}"
   cp "${DOXYCONFIG_DIR}/doxyconfig-icons.js" "${docs_dir}"
   cp "${DOXYCONFIG_DIR}/doxyconfig.css" "${docs_dir}"
-  cp "${DOXYCONFIG_DIR}/doxyconfig-readthedocs-search.js" "${docs_dir}"
   cat "${docs_dir}Doxyfile" >> "${docs_dir}doxyconfig-Doxyfile"
   return 0
 }
