@@ -100,60 +100,151 @@ enum class MyEnum
 
 #### Standard Admonitions
 
-* @verbatim@attention Attention needed.@endverbatim
-  @attention Attention needed.
-
-* @verbatim@important An important message.@endverbatim
-  @important An important message.
-
-* @verbatim@note A note.@endverbatim
-  @note A note.
-
-* @verbatim@pre A precondition.@endverbatim
-  @pre A precondition.
-
-* @verbatim@remark Some remarks.@endverbatim
-  @remark Some remarks.
-
-* @verbatim@warning - A warning.@endverbatim
-  @warning A warning.
+<table class="doxtable code-result-table">
+<tr>
+<th>Code</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>
+@verbatim
+@attention Attention needed.
+@endverbatim
+</td>
+<td>
+@attention Attention needed.
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@important An important message.
+@endverbatim
+</td>
+<td>
+@important An important message.
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@note A note.
+@endverbatim
+</td>
+<td>
+@note A note.
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@pre A precondition.
+@endverbatim
+</td>
+<td>
+@pre A precondition.
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@remark Some remarks.
+@endverbatim
+</td>
+<td>
+@remark Some remarks.
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@warning A warning.
+@endverbatim
+</td>
+<td>
+@warning A warning.
+</td>
+</tr>
+</table>
 
 #### GitHub Flavored Markdown Admonitions
 
-* @verbatim
+<table class="doxtable code-result-table">
+<tr>
+<th>Code</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>
+@verbatim
 > [!CAUTION]
 > This is a caution.
 @endverbatim
-  > [!CAUTION]
-  > This is a caution.
+</td>
+<td>
 
-* @verbatim
+> [!CAUTION]
+> This is a caution.
+
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
 > [!IMPORTANT]
 > This is important.
 @endverbatim
-  > [!IMPORTANT]
-  > This is important.
+</td>
+<td>
 
-* @verbatim
+> [!IMPORTANT]
+> This is important.
+
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
 > [!NOTE]
 > This is a note.
 @endverbatim
-  > [!NOTE]
-  > This is a note.
+</td>
+<td>
 
-* @verbatim
+> [!NOTE]
+> This is a note.
+
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
 > [!TIP]
 > This is a tip.
 @endverbatim
-  > [!TIP]
-  > This is a tip.
+</td>
+<td>
 
-* @verbatim
+> [!TIP]
+> This is a tip.
+
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
 > [!WARNING]
 > This is a warning.
 @endverbatim
-  > [!WARNING]
-  > This is a warning.
+</td>
+<td>
+
+> [!WARNING]
+> This is a warning.
+
+</td>
+</tr>
+</table>
 
 ### Custom Aliases
 
@@ -161,61 +252,249 @@ We have defined some custom aliases to simplify documenting examples.
 
 * \@examples - Start of an example block. This will format the following text as `cpp`.
 * \@examples_end - End of an example block.
-* \@lucide_icon{icon name} - Insert a Lucide icon. Give the icon name as an argument.
-  e.g. \@lucide_icon{check}.
-* Admonitions
-  * \@admonition{Custom Title | Content }
-    @admonition{The one with the custom titles | It’s got a certain charm to it.}
-  * \@attention{Content}
-    @attention{The sun causes global warming.}
-  * \@caution{Content}
-    @caution{Cliff ahead: Don’t drive off it.}
-  * \@danger{Content}
-    @danger{Mad scientist at work!}
-  * \@error{Content}
-    @error{Does not compute.}
-  * \@hint{Content}
-    @hint{Insulators insulate, until they are subject to ______ voltage.}
-  * \@important{Content}
-    @important{Tech is not neutral, nor is it apolitical.}
-  * \@note{Content}
-    @note{This is a note.}
-  * \@seealso{Content}
-    @seealso{Other relevant information.}
-  * \@tip{Content}
-    @tip{25% if the service is good.}
-  * \@todo{Content}
-    @todo{Fix this.}
-  * \@warning{Content}
-    @warning{Reader discretion is strongly advised.}
 
-* Markers
-  * \@red{Content}<br>
-    @red{This is red.}
-  * \@blue{Content}<br>
-    @blue{This is blue.}
-  * \@green{Content}<br>
-    @green{This is green.}
-  * \@yellow{Content}<br>
-    @yellow{This is yellow.}
+#### Lucide Icons
 
-* Expander
-  @verbatim
-  @expander{Expander Title | Expander Content}
-  @endverbatim
-  @expander{Expander Title | Expander Content}
+Use `\@lucide_icon{icon name}` to insert a Lucide icon.
 
-* Tabs
-  @verbatim
+<table class="doxtable code-result-table">
+<tr>
+<th>Code</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>
+@verbatim
+@lucide_icon{check}
+@endverbatim
+</td>
+<td>
+@lucide_icon{check}
+</td>
+</tr>
+</table>
+
+#### Admonitions
+
+<table class="doxtable code-result-table">
+<tr>
+<th>Code</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>
+@verbatim
+@admonition{Custom Title | Content}
+@endverbatim
+</td>
+<td>
+@admonition{The one with the custom titles | It’s got a certain charm to it.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@attention{Content}
+@endverbatim
+</td>
+<td>
+@attention{The sun causes global warming.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@caution{Content}
+@endverbatim
+</td>
+<td>
+@caution{Cliff ahead: Don’t drive off it.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@danger{Content}
+@endverbatim
+</td>
+<td>
+@danger{Mad scientist at work!}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@error{Content}
+@endverbatim
+</td>
+<td>
+@error{Does not compute.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@hint{Content}
+@endverbatim
+</td>
+<td>
+@hint{Insulators insulate, until they are subject to ______ voltage.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@important{Content}
+@endverbatim
+</td>
+<td>
+@important{Tech is not neutral, nor is it apolitical.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@note{Content}
+@endverbatim
+</td>
+<td>
+@note{This is a note.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@seealso{Content}
+@endverbatim
+</td>
+<td>
+@seealso{Other relevant information.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@tip{Content}
+@endverbatim
+</td>
+<td>
+@tip{25% if the service is good.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@todo{Content}
+@endverbatim
+</td>
+<td>
+@todo{Fix this.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@warning{Content}
+@endverbatim
+</td>
+<td>
+@warning{Reader discretion is strongly advised.}
+</td>
+</tr>
+</table>
+
+#### Markers
+
+<table class="doxtable code-result-table">
+<tr>
+<th>Code</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>
+@verbatim
+@red{Content}
+@endverbatim
+</td>
+<td>
+@red{This is red.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@blue{Content}
+@endverbatim
+</td>
+<td>
+@blue{This is blue.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@green{Content}
+@endverbatim
+</td>
+<td>
+@green{This is green.}
+</td>
+</tr>
+<tr>
+<td>
+@verbatim
+@yellow{Content}
+@endverbatim
+</td>
+<td>
+@yellow{This is yellow.}
+</td>
+</tr>
+</table>
+
+#### Expander
+
+<table class="doxtable code-result-table">
+<tr>
+<th>Code</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>
+@verbatim
+@expander{Expander Title | Expander Content}
+@endverbatim
+</td>
+<td>
+@expander{Expander Title | Expander Content}
+</td>
+</tr>
+</table>
+
+#### Tabs
+
+<table class="doxtable code-result-table">
+<tr>
+<th>Code</th>
+<th>Result</th>
+</tr>
+<tr>
+<td>
+@verbatim
 @tabs{
   @tab{ Tab 1 Title | Tab 1 Content }
   @tab{ Tab 2 Title | Tab 2 Content }
 }
 @endverbatim
-  @tabs{
-    @tab{ Tab 1 Title | Tab 1 Content }
-    @tab{ Tab 2 Title | Tab 2 Content }
-  }
+</td>
+<td>
+@tabs{
+  @tab{ Tab 1 Title | Tab 1 Content }
+  @tab{ Tab 2 Title | Tab 2 Content }
+}
+</td>
+</tr>
+</table>
 
 <details style="display: none;">
   <summary></summary>
