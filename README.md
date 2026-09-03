@@ -9,10 +9,20 @@
 </div>
 
 <div align="center">
-  <a href="https://sonarcloud.io/project/overview?id=LizardByte_doyxconfig"><img src="https://img.shields.io/sonar/quality_gate/LizardByte_doxyconfig.svg?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge&logo=sonarqubecloud&label=sonarcloud" alt="SonarCloud"></a>
+  <a href="https://sonarcloud.io/project/overview?id=LizardByte_doxyconfig"><img src="https://img.shields.io/sonar/quality_gate/LizardByte_doxyconfig.svg?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge&logo=sonarqubecloud&label=sonarcloud" alt="SonarCloud"></a>
 </div>
 
-## Usage
+# Overview
+
+This repository provides the common Doxygen configuration used by LizardByte projects. It includes shared Doxygen
+defaults, Doxygen Awesome styling, custom aliases, and CMake and Read the Docs integration.
+
+## 🚀 Usage
+
+> [!IMPORTANT]
+> When using a Markdown file with `USE_MDFILE_AS_MAINPAGE`, make its first Markdown heading a level 1 heading
+> (`# ...`). An HTML `<h1>` does not count. Starting with a level 2 or lower Markdown heading can cause Doxygen to
+> place the main page's sections beneath the next Markdown page in the navigation tree.
 
 1. Add this repository as a submodule to your project.
 
@@ -43,7 +53,7 @@
    INPUT += ../third-party/doxyconfig/docs/source_code.md
    ```
 
-6. Optionally, copy the `.readthedocs.yaml` file to the root of your project.
+6. To build the project on Read the Docs, copy `.readthedocs.yaml` to the root of your project.
 
 <details style="display: none;">
   <summary></summary>
