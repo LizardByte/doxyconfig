@@ -21,9 +21,9 @@ function setup_conda_env {
 
 function install_icons {
   echo "Downloading LizardByte graphics"
-  wget "https://raw.githubusercontent.com/LizardByte/.github/master/branding/logos/favicon.ico" \
+  wget --max-redirect=0 "https://raw.githubusercontent.com/LizardByte/.github/master/branding/logos/favicon.ico" \
     -O "${READTHEDOCS_OUTPUT}lizardbyte.ico"
-  wget "https://raw.githubusercontent.com/LizardByte/.github/master/branding/logos/logo-128x128.png" \
+  wget --max-redirect=0 "https://raw.githubusercontent.com/LizardByte/.github/master/branding/logos/logo-128x128.png" \
     -O "${READTHEDOCS_OUTPUT}lizardbyte.png"
   return 0
 }
