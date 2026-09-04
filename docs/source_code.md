@@ -473,6 +473,8 @@ Use `\@lucide_icon{icon name}` to insert a Lucide icon.
 
 #### Tabs
 
+Use `\@tab_with_pipe` when the tab content contains a pipe (`|`). Its arguments use `|:|` as the separator.
+
 <table class="doxtable code-result-table">
 <tr>
 <th>Code</th>
@@ -483,14 +485,14 @@ Use `\@lucide_icon{icon name}` to insert a Lucide icon.
 @verbatim
 @tabs{
   @tab{ Tab 1 Title | Tab 1 Content }
-  @tab{ Tab 2 Title | Tab 2 Content }
+  @tab_with_pipe{ Pipeline |:| `printf 'Hello\n' | grep Hello` }
 }
 @endverbatim
 </td>
 <td>
 @tabs{
   @tab{ Tab 1 Title | Tab 1 Content }
-  @tab{ Tab 2 Title | Tab 2 Content }
+  @tab_with_pipe{ Pipeline |:| `printf 'Hello\n' | grep Hello` }
 }
 </td>
 </tr>

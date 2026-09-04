@@ -77,6 +77,7 @@ ALIASES += "warning{1}=@_admonition{Warning | section warning | triangle-alert |
 # tabs
 # see: https://github.com/jothepro/doxygen-awesome-css/discussions/146
 ALIASES += tab{2|}="<li><b class=\"tab-title\">\1</b>^^\2^^</li>"
+ALIASES += tab_with_pipe{2|:|}="<li><b class=\"tab-title\">\1</b>^^\2^^</li>"
 ALIASES += tabs{1}="<div class=\"tabbed\"><ul>^^\1^^</ul></div><br>"
 # markers
 ALIASES += red{1}="<span style=\"color:red\">\1</span>"
