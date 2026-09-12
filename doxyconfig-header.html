@@ -67,7 +67,10 @@ $extrastylesheet
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeInteractiveToc.init()
   DoxygenAwesomeTabs.init()
-  DoxygenAwesomeReadtheDocsSearch.init()
+  DoxygenAwesomeReadtheDocsSearch.init('rightAlign', {
+    projectSlug: '@DOXYCONFIG_READTHEDOCS_PROJECT_SLUG@',
+    versionSlug: 'latest',
+  })
 </script>
 <!--DOXYGEN-AWESOME END-->
 </head>

@@ -54,7 +54,8 @@ function merge_doxyconfigs {
   local docs_dir="./docs/"
   echo "Merging doxygen configs"
   cp "${DOXYCONFIG_DIR}/doxyconfig-Doxyfile" "${docs_dir}"
-  cp "${DOXYCONFIG_DIR}/doxyconfig-header.html" "${docs_dir}"
+  sed "s/@DOXYCONFIG_READTHEDOCS_PROJECT_SLUG@/${READTHEDOCS_PROJECT}/g" \
+    "${DOXYCONFIG_DIR}/doxyconfig-header.html" > "${docs_dir}doxyconfig-header.html"
   cp "${DOXYCONFIG_DIR}/doxyconfig-icons.js" "${docs_dir}"
   cp "${DOXYCONFIG_DIR}/doxyconfig.css" "${docs_dir}"
   cat "${docs_dir}Doxyfile" >> "${docs_dir}doxyconfig-Doxyfile"

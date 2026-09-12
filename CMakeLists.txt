@@ -28,7 +28,18 @@ message(STATUS "DOXYGEN_BUILD_DIR_CMAKE: ${DOXYGEN_BUILD_DIR_CMAKE}")
 file(MAKE_DIRECTORY "${DOXYGEN_BUILD_DIR_CMAKE}/html")
 
 # copy files to build directory
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-header.html" DESTINATION "${SOURCE_DOCS_DIR}")
+if(NOT DEFINED DOXYCONFIG_READTHEDOCS_PROJECT_SLUG)
+    if(DEFINED ENV{READTHEDOCS_PROJECT})
+        set(DOXYCONFIG_READTHEDOCS_PROJECT_SLUG "$ENV{READTHEDOCS_PROJECT}")
+    else()
+        string(TOLOWER "${CMAKE_PROJECT_NAME}" DOXYCONFIG_READTHEDOCS_PROJECT_SLUG)
+    endif()
+endif()
+configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-header.html"
+        "${SOURCE_DOCS_DIR}/doxyconfig-header.html"
+        @ONLY
+)
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-Doxyfile" DESTINATION "${SOURCE_DOCS_DIR}")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig-icons.js" DESTINATION "${SOURCE_DOCS_DIR}")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/doxyconfig.css" DESTINATION "${SOURCE_DOCS_DIR}")

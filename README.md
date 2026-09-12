@@ -36,9 +36,14 @@ defaults, Doxygen Awesome styling, custom aliases, and CMake and Read the Docs i
    ```cmake
    option(BUILD_DOCS "Build documentation" ON)
    if(BUILD_DOCS)
+       # Set this when the Read the Docs slug differs from the lowercased CMake project name.
+       # set(DOXYCONFIG_READTHEDOCS_PROJECT_SLUG your-readthedocs-project)
        add_subdirectory(third-party/doxyconfig docs)
    endif()
    ```
+
+   Read the Docs builds use `READTHEDOCS_PROJECT` automatically. Local CMake builds default to the lowercased
+   top-level project name; set `DOXYCONFIG_READTHEDOCS_PROJECT_SLUG` when the Read the Docs slug differs.
 
 4. Add the following to your `.gitignore` file.
 
