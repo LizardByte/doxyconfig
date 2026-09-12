@@ -21,6 +21,11 @@ dl.important {
 dl.important dt {
     color: var(--todo-color-dark);
 }
+dl.important code,
+dl.important span.tt {
+    background: var(--section-code-background);
+    border: 1px solid var(--section-code-border);
+}
 
 table.code-result-table {
     table-layout: fixed;
